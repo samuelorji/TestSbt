@@ -5,3 +5,4 @@ services:
     restart: always
     ports:
       - 5432:5432
+    container_name: bonify_postgres

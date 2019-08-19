@@ -36,7 +36,7 @@ class WebServiceSpec extends WebServiceTestServiceT with WebServiceT {
     }
 
   }
-  override val filePath: String = "data/file.txt"
+  override val filePath: String = "data/file.csv"
 }
 
 private[web] abstract class WebServiceTestServiceT extends Matchers

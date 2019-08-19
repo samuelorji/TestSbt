@@ -18,7 +18,15 @@ object Server extends App {
     * Data Model*/
   case class BankRecord(bank : String, identifier : String)
 
-  Http().bindAndHandle(new WebServiceT {
-    override val filePath: String = args(0)
-  }.routes,BonifyConfig.webHost,BonifyConfig.webPort)
+  val filePathOpt   = args.headOption
+  filePathOpt match {
+    case Some(filepath) =>
+      Http().bindAndHandle(new WebServiceT {
+        override val filePath: String = filepath
+      }.routes,BonifyConfig.webHost,BonifyConfig.webPort)
+    case None           =>
+      throw new IllegalArgumentException("Application needs FilePath")
+  }
+
+
 }

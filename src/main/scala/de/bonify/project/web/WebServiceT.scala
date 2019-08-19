@@ -41,7 +41,12 @@ trait WebServiceT {
           parameter('identifier){ id =>
             complete(BonifyMapper.findById(id).map(result =>
               result.rows match {
-                case Some(row) => StatusCodes.OK       -> Some(row.head("bank_name").asInstanceOf[String])
+                case Some(row) =>
+                  if(row.isEmpty){
+                    StatusCodes.NotFound -> None
+                  }else{
+                    StatusCodes.OK -> Some(row.head("bank_name").asInstanceOf[String])
+                  }
                 case None      => StatusCodes.NotFound -> None
               }))
           }
