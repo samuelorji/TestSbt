@@ -15,10 +15,11 @@ import Server.BankRecord
 trait WebServiceT {
 
   val filePath : String
+  val source = Source.fromFile(filePath)
 
   private def insertIntoDb =
     BonifyMapper.insertIntoDatabase(
-      Source.fromFile(filePath).getLines().drop(1).map{x =>
+      source.fromFile(filePath).getLines().drop(1).map{x =>
         val entries = x.split(";")
         require(entries.length == 2, "Invalid text format")
         BankRecord(entries.head,entries.last)
@@ -28,7 +29,10 @@ trait WebServiceT {
     path("load"){
       get{
         onComplete(insertIntoDb) {
-          case Success(_) => complete(StatusCodes.OK, "Data Loaded into Database")
+          case Success(_) =>
+            //ensure source is closed to
+            source.close()
+            complete(StatusCodes.OK, "Data Loaded into Database")
           case Failure(ex) =>
             //We can either log the error, but for simplicity, let us just print the result to the console
             println(ex.getMessage)

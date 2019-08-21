@@ -1,13 +1,13 @@
 package de.bonify.project
 
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
-
 import core.config.BonifyConfig
 import web.WebServiceT
+
+import scala.io.Source
 
 object Server extends App {
 
@@ -27,6 +27,8 @@ object Server extends App {
     case None           =>
       throw new IllegalArgumentException("Application needs FilePath")
   }
+
+  val file = Source.fromFile("data/url.csv").getLines()
 
 
 }
