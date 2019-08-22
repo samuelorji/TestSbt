@@ -1,10 +1,11 @@
 package de.bonify.project.web
 
-import akka.http.scaladsl.model.{HttpMethods, HttpRequest, StatusCodes}
+import akka.http.scaladsl.model.{ HttpMethods, HttpRequest, StatusCodes }
 import akka.http.scaladsl.server.Route
-import akka.http.scaladsl.testkit.{RouteTestTimeout, ScalatestRouteTest}
+import akka.http.scaladsl.testkit.{ RouteTestTimeout, ScalatestRouteTest }
 import akka.testkit.TestKit
-import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
+
+import org.scalatest.{ BeforeAndAfterAll, Matchers, WordSpecLike }
 
 import scala.concurrent.duration.FiniteDuration
 
@@ -14,14 +15,14 @@ class WebServiceSpec extends WebServiceTestServiceT with WebServiceT {
 
 
   "The Web Service " should {
-    "Reject a Get Typecast Query without a given parameter 'identifier' " in {
+    "Process a vaild Dynamic URL request " in {
       HttpRequest(
         method = HttpMethods.GET,
-        uri    = "/api/fetch",
+        uri    = "/api/dynamic",
 
       ) ~> Route.seal(routes) ~> check {
-        status shouldEqual StatusCodes.NotFound
-        responseAs[String] shouldEqual "Request is missing required query parameter 'identifier'"
+        status shouldEqual StatusCodes.OK
+        responseAs[String] shouldEqual "/users/*dynamic*/info/*dynamic*"
       }
     }
     "leave requests to base path unhandled" in {
@@ -36,7 +37,7 @@ class WebServiceSpec extends WebServiceTestServiceT with WebServiceT {
     }
 
   }
-  override val filePath: String = "data/file.csv"
+  override val filePath: String = "data/url.csv"
 }
 
 private[web] abstract class WebServiceTestServiceT extends Matchers
