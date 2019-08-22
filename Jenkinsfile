@@ -1,5 +1,12 @@
 pipeline {
-    agent any 
+    agent {
+        docker {
+            image 'openjdk:11-jre-slim'
+            args '-v $HOME/.sbt:/root/.sbt'
+            args '-v $HOME/.ivy2:/root/.ivy2'
+        }
+    
+    }
     stages {
         stage('clean') {
             steps {
