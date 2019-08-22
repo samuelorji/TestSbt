@@ -28,7 +28,9 @@ object Server extends App {
       throw new IllegalArgumentException("Application needs FilePath")
   }
 
-  val file = Source.fromFile("data/url.csv").getLines()
-
-
+  def processContract(`type`: String): Unit = {
+    if ("electricity" == `type`) System.out.println("Processed electricity")
+    else if ("dsl" == `type`) System.out.println("Processed dsl")
+    else if ("appartment_rent" == `type`) System.out.println("Processed appartment")
+  }
 }

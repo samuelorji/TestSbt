@@ -19,7 +19,7 @@ trait WebServiceT {
 
   private def insertIntoDb =
     BonifyMapper.insertIntoDatabase(
-      source.fromFile(filePath).getLines().drop(1).map{x =>
+      source.getLines().drop(1).map{x =>
         val entries = x.split(";")
         require(entries.length == 2, "Invalid text format")
         BankRecord(entries.head,entries.last)
