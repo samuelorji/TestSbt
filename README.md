@@ -44,4 +44,4 @@ The result should be ***Commerzbank***
 I wrote some tests for the application and they are run with
 ```sbt test```
 
-
+Test
