@@ -34,8 +34,6 @@ The code was designed to be flexible, in that all actions are done via Http Requ
 
 ```curl http://localhost:8082/api/load```
 
-This endpoint should only be called once to load the data, as any subsequent call will thrown an error because the stream used to read the data is closed after the first request.
-
 To fetch the bank record with the identifier ***10040000*** we simply make a GET Http request with an identifer parameter to the endpoint as shown below
 
 ```curl http://localhost:8082/api/fetch?identifier=10040000```.
